@@ -14,6 +14,7 @@
 /// @param toURL      合并后音频文件的存放地址
 /// 注意:导出的文件是:m4a格式的.
 + (void)sourceComposeToURL:(NSURL *) toURL backUrl:(NSURL*)backUrl audioUrl:(NSURL*)audioUrl completed:(void (^)(NSError *error)) completed{
+    NSMutableArray *audioMixParams = [NSMutableArray array];
     
     //    NSAssert(sourceURLs.count > 1,@"源文件不足两个无需合并");
     
@@ -30,12 +31,23 @@
         NSLog(@"插入音频失败: %@",error);
     }
     
+    
+
+    
     //Demo中暂时把时间设置的短一点
     CGFloat startSecond = 3;
     CGFloat endSecond = 13;
     CMTime start = CMTimeMakeWithSeconds(startSecond, backAudioAsset.duration.timescale);
     CMTime duration = CMTimeMakeWithSeconds(endSecond - startSecond,backAudioAsset.duration.timescale);
     CMTimeRange audio_timeRange = CMTimeRangeMake(start, duration);
+    
+    //修改背景音乐
+    AVMutableAudioMixInputParameters *trackMix = [AVMutableAudioMixInputParameters audioMixInputParametersWithTrack:compositionAudioTrack];
+    [trackMix setVolume:0.3f atTime:start];
+    [audioMixParams addObject:trackMix];
+    
+    AVMutableAudioMix *backAudioMix = [AVMutableAudioMix audioMix];
+    backAudioMix.inputParameters = [NSArray arrayWithArray:audioMixParams];
     
     AVMutableCompositionTrack *recordAudioTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:kCMPersistentTrackID_Invalid];
     NSError *recordError = nil;
@@ -54,6 +66,8 @@
     assetExport.outputURL = toURL;
     //  导出音视频的文件格式
     assetExport.outputFileType = AVFileTypeAppleM4A;//@"com.apple.m4a-audio";
+    //导出参数
+    assetExport.audioMix = backAudioMix;
     //  导入出
     [assetExport exportAsynchronouslyWithCompletionHandler:^{
         //      分发到主线程
