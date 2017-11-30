@@ -13,11 +13,7 @@
 /// @param sourceURLs 需要合并的多个音频文件
 /// @param toURL      合并后音频文件的存放地址
 /// 注意:导出的文件是:m4a格式的.
-+ (void)sourceComposeToURL:(NSURL *) toURL backUrl:(NSURL*)backUrl audioUrl:(NSURL*)audioUrl completed:(void (^)(NSError *error)) completed{
-    NSMutableArray *audioMixParams = [NSMutableArray array];
-    
-    //    NSAssert(sourceURLs.count > 1,@"源文件不足两个无需合并");
-    
++ (void)sourceComposeToURL:(NSURL *) toURL backUrl:(NSURL*)backUrl audioUrl:(NSURL*)audioUrl startTime:(float)startTime completed:(void (^)(NSError *error)) completed{
     //  合并所有的录音文件
     AVMutableComposition* mixComposition = [AVMutableComposition composition];
     
@@ -31,34 +27,37 @@
         NSLog(@"插入音频失败: %@",error);
     }
     
-    
-
-    
-    //Demo中暂时把时间设置的短一点
-    CGFloat startSecond = 3;
-    CGFloat endSecond = 13;
-    CMTime start = CMTimeMakeWithSeconds(startSecond, backAudioAsset.duration.timescale);
-    CMTime duration = CMTimeMakeWithSeconds(endSecond - startSecond,backAudioAsset.duration.timescale);
-    CMTimeRange audio_timeRange = CMTimeRangeMake(start, duration);
-    
-    //修改背景音乐
-    AVMutableAudioMixInputParameters *trackMix = [AVMutableAudioMixInputParameters audioMixInputParametersWithTrack:compositionAudioTrack];
-    [trackMix setVolume:0.3f atTime:start];
-    [audioMixParams addObject:trackMix];
-    
-    AVMutableAudioMix *backAudioMix = [AVMutableAudioMix audioMix];
-    backAudioMix.inputParameters = [NSArray arrayWithArray:audioMixParams];
-    
     AVMutableCompositionTrack *recordAudioTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:kCMPersistentTrackID_Invalid];
     NSError *recordError = nil;
     AVURLAsset  *recordAudioAsset = [[AVURLAsset alloc]initWithURL:audioUrl options:nil];
-    //    CMTimeRange record_audio_timeRange = CMTimeRangeMake(kCMTimeZero, backAudioAsset.duration);
+    //获取录音文件时长
+    CMTime audioDuration = recordAudioAsset.duration;
+    float audioDurationSeconds = CMTimeGetSeconds(audioDuration);
+    //计算录音文件插入时间段
+    CMTime start = CMTimeMakeWithSeconds(startTime, 1);
+    CMTime duration = CMTimeMakeWithSeconds(audioDurationSeconds,1);
+    CMTimeRange audio_timeRange = CMTimeRangeMake(CMTimeMakeWithSeconds(0, 1), duration);
+    
     BOOL recordSuccess = [recordAudioTrack insertTimeRange:audio_timeRange ofTrack:[[recordAudioAsset tracksWithMediaType:AVMediaTypeAudio] objectAtIndex:0] atTime:start error:&recordError];
     if (!recordSuccess) {
         NSLog(@"插入音频失败: %@",recordError);
     }
-    //      记录开始时间
     
+    //设置降低背景音乐参数
+    NSMutableArray *audioMixParams = [NSMutableArray array];
+    //降低背景音乐时间节点
+    AVMutableAudioMixInputParameters *minColumeMix = [AVMutableAudioMixInputParameters audioMixInputParametersWithTrack:compositionAudioTrack];
+    [minColumeMix setVolumeRampFromStartVolume:1. toEndVolume:0.1 timeRange:CMTimeRangeMake(CMTimeMake(startTime-1, 1), CMTimeMake(2, 1))];
+    [audioMixParams addObject:minColumeMix];
+    //提高背景音乐时间节点
+//    AVMutableAudioMixInputParameters *maxVolumeMix = [AVMutableAudioMixInputParameters audioMixInputParametersWithTrack:compositionAudioTrack];
+    CMTime endMinVolumeTime = CMTimeMake(startTime+audioDurationSeconds, 1);
+//    [maxVolumeMix setVolume:1.f atTime:endMinVolumeTime];
+    [minColumeMix setVolumeRampFromStartVolume:0.1 toEndVolume:1. timeRange:CMTimeRangeMake(endMinVolumeTime, CMTimeMake(2, 1))];
+//    [audioMixParams addObject:maxVolumeMix];
+    
+    AVMutableAudioMix *backAudioMix = [AVMutableAudioMix audioMix];
+    backAudioMix.inputParameters = [NSArray arrayWithArray:audioMixParams];
     
     // 创建一个导入M4A格式的音频的导出对象
     AVAssetExportSession* assetExport = [[AVAssetExportSession alloc] initWithAsset:mixComposition presetName:AVAssetExportPresetAppleM4A];

@@ -62,6 +62,8 @@
                     </view>
                     <connections>
                         <outlet property="composeButton" destination="cl8-PI-gHd" id="118-na-UGI"/>
+                        <outlet property="startRecordButton" destination="4Dq-Ia-LKI" id="vWF-gk-IT5"/>
+                        <outlet property="stopRecordButton" destination="C2U-U0-SQp" id="DVd-fm-CLL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

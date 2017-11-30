@@ -23,12 +23,16 @@
 /// 目标路径
 @property (nonatomic, copy) NSURL *destURL;
 
+@property (weak, nonatomic) IBOutlet UIButton *startRecordButton;
+@property (weak, nonatomic) IBOutlet UIButton *stopRecordButton;
+
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.startRecordButton.hidden = self.stopRecordButton.hidden = YES;
 }
 
 
@@ -55,26 +59,26 @@
     //  文档路径
     NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     //  文件路径
-    NSArray *fileNames = [[NSFileManager defaultManager] subpathsAtPath:docPath];
+//    NSArray *fileNames = [[NSFileManager defaultManager] subpathsAtPath:docPath];
     //  获取文档目录保存所有 .AAC 格式的音频文件URL
-    NSMutableArray *sourceURLs = [NSMutableArray array];
+//    NSMutableArray *sourceURLs = [NSMutableArray array];
     
     //  遍历
-    for (NSString *fileName in fileNames) {
-        NSLog(@"源文件:%@",fileName);
-        
-        if (![fileName.pathExtension isEqualToString:@"AAC"]) {
-            continue;
-        }
-        
-        //      文件路径
-        NSString *filePath = [docPath stringByAppendingPathComponent:fileName];
-        //      文件的URL
-        NSURL *fileURL = [NSURL fileURLWithPath:filePath];
-        //      源文件数组
-        [sourceURLs addObject:fileURL];
-    }
-    
+//    for (NSString *fileName in fileNames) {
+//        NSLog(@"源文件:%@",fileName);
+//
+//        if (![fileName.pathExtension isEqualToString:@"AAC"]) {
+//            continue;
+//        }
+//
+//        //      文件路径
+//        NSString *filePath = [docPath stringByAppendingPathComponent:fileName];
+//        //      文件的URL
+//        NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+//        //      源文件数组
+//        [sourceURLs addObject:fileURL];
+//    }
+//
     //  目标文件路径
     
     
@@ -92,11 +96,15 @@
     }
     //  目录文件URL
     self.destURL = [NSURL fileURLWithPath:destPath];
-    NSString *path = [[NSBundle mainBundle]pathForResource:@"GALA" ofType:@"mp3"];
+    NSString *path = [[NSBundle mainBundle]pathForResource:@"Happy" ofType:@"mp3"];
     NSURL *url = [NSURL fileURLWithPath:path];
-    [sourceURLs addObject:url];
+//    [sourceURLs addObject:url];
+    
+    NSString *recordPath = [[NSBundle mainBundle]pathForResource:@"HappyRecord" ofType:@"mp3"];
+    NSURL *recordUrl = [NSURL fileURLWithPath:recordPath];
+//    [sourceURLs addObject:recordUrl];
     ////  导出音频
-    [MixTool sourceComposeToURL:self.destURL backUrl:url audioUrl:sourceURLs.firstObject completed:^(NSError *error) {
+    [MixTool sourceComposeToURL:self.destURL backUrl:url audioUrl:recordUrl startTime:2. completed:^(NSError *error) {
         if (error == nil) {
             [self.composeButton setTitle:@"合并成功" forState:UIControlStateNormal];
         }

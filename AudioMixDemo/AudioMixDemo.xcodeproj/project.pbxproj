@@ -17,6 +17,8 @@
 		3033ADA51FCC7C5A00C90344 /* AudioMixDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3033ADA41FCC7C5A00C90344 /* AudioMixDemoUITests.m */; };
 		3033ADB41FCC7C9E00C90344 /* MixTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 3033ADB31FCC7C9E00C90344 /* MixTool.m */; };
 		3033ADB61FCC7F2B00C90344 /* GALA.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3033ADB51FCC7F2A00C90344 /* GALA.mp3 */; };
+		3033AE621FD006B900C90344 /* Happy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3033AE611FD006B800C90344 /* Happy.mp3 */; };
+		3033AE641FD006F400C90344 /* HappyRecord.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3033AE631FD006F400C90344 /* HappyRecord.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,8 @@
 		3033ADB21FCC7C9E00C90344 /* MixTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MixTool.h; sourceTree = "<group>"; };
 		3033ADB31FCC7C9E00C90344 /* MixTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MixTool.m; sourceTree = "<group>"; };
 		3033ADB51FCC7F2A00C90344 /* GALA.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = GALA.mp3; sourceTree = "<group>"; };
+		3033AE611FD006B800C90344 /* Happy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Happy.mp3; sourceTree = "<group>"; };
+		3033AE631FD006F400C90344 /* HappyRecord.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = HappyRecord.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,8 @@
 		3033AD7F1FCC7C5900C90344 /* AudioMixDemo */ = {
 			isa = PBXGroup;
 			children = (
+				3033AE631FD006F400C90344 /* HappyRecord.mp3 */,
+				3033AE611FD006B800C90344 /* Happy.mp3 */,
 				3033ADB51FCC7F2A00C90344 /* GALA.mp3 */,
 				3033AD801FCC7C5900C90344 /* AppDelegate.h */,
 				3033AD811FCC7C5900C90344 /* AppDelegate.m */,
@@ -246,7 +252,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3033AE621FD006B900C90344 /* Happy.mp3 in Resources */,
 				3033AD8D1FCC7C5900C90344 /* LaunchScreen.storyboard in Resources */,
+				3033AE641FD006F400C90344 /* HappyRecord.mp3 in Resources */,
 				3033AD8A1FCC7C5900C90344 /* Assets.xcassets in Resources */,
 				3033AD881FCC7C5900C90344 /* Main.storyboard in Resources */,
 				3033ADB61FCC7F2B00C90344 /* GALA.mp3 in Resources */,
