@@ -19,6 +19,8 @@
 		3033ADB61FCC7F2B00C90344 /* GALA.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3033ADB51FCC7F2A00C90344 /* GALA.mp3 */; };
 		3033AE621FD006B900C90344 /* Happy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3033AE611FD006B800C90344 /* Happy.mp3 */; };
 		3033AE641FD006F400C90344 /* HappyRecord.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3033AE631FD006F400C90344 /* HappyRecord.mp3 */; };
+		30EF3E971FF624850040CFF5 /* HTSoundBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EF3E961FF624850040CFF5 /* HTSoundBoard.m */; };
+		30EF3E9A1FF625370040CFF5 /* HTSoundBoard+fadeVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EF3E991FF625370040CFF5 /* HTSoundBoard+fadeVolume.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,10 @@
 		3033ADB51FCC7F2A00C90344 /* GALA.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = GALA.mp3; sourceTree = "<group>"; };
 		3033AE611FD006B800C90344 /* Happy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Happy.mp3; sourceTree = "<group>"; };
 		3033AE631FD006F400C90344 /* HappyRecord.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = HappyRecord.mp3; sourceTree = "<group>"; };
+		30EF3E951FF624850040CFF5 /* HTSoundBoard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTSoundBoard.h; sourceTree = "<group>"; };
+		30EF3E961FF624850040CFF5 /* HTSoundBoard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HTSoundBoard.m; sourceTree = "<group>"; };
+		30EF3E981FF625370040CFF5 /* HTSoundBoard+fadeVolume.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HTSoundBoard+fadeVolume.h"; sourceTree = "<group>"; };
+		30EF3E991FF625370040CFF5 /* HTSoundBoard+fadeVolume.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "HTSoundBoard+fadeVolume.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +116,7 @@
 		3033AD7F1FCC7C5900C90344 /* AudioMixDemo */ = {
 			isa = PBXGroup;
 			children = (
+				30EF3E941FF624700040CFF5 /* HTSoundBoard */,
 				3033AE631FD006F400C90344 /* HappyRecord.mp3 */,
 				3033AE611FD006B800C90344 /* Happy.mp3 */,
 				3033ADB51FCC7F2A00C90344 /* GALA.mp3 */,
@@ -144,6 +151,17 @@
 				3033ADA61FCC7C5A00C90344 /* Info.plist */,
 			);
 			path = AudioMixDemoUITests;
+			sourceTree = "<group>";
+		};
+		30EF3E941FF624700040CFF5 /* HTSoundBoard */ = {
+			isa = PBXGroup;
+			children = (
+				30EF3E951FF624850040CFF5 /* HTSoundBoard.h */,
+				30EF3E961FF624850040CFF5 /* HTSoundBoard.m */,
+				30EF3E981FF625370040CFF5 /* HTSoundBoard+fadeVolume.h */,
+				30EF3E991FF625370040CFF5 /* HTSoundBoard+fadeVolume.m */,
+			);
+			path = HTSoundBoard;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -283,6 +301,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3033ADB41FCC7C9E00C90344 /* MixTool.m in Sources */,
+				30EF3E971FF624850040CFF5 /* HTSoundBoard.m in Sources */,
+				30EF3E9A1FF625370040CFF5 /* HTSoundBoard+fadeVolume.m in Sources */,
 				3033AD851FCC7C5900C90344 /* ViewController.m in Sources */,
 				3033AD901FCC7C5900C90344 /* main.m in Sources */,
 				3033AD821FCC7C5900C90344 /* AppDelegate.m in Sources */,

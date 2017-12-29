@@ -59,6 +59,9 @@
     AVMutableAudioMix *backAudioMix = [AVMutableAudioMix audioMix];
     backAudioMix.inputParameters = [NSArray arrayWithArray:audioMixParams];
     
+    AVAudioEngine *engine;
+    
+    
     // 创建一个导入M4A格式的音频的导出对象
     AVAssetExportSession* assetExport = [[AVAssetExportSession alloc] initWithAsset:mixComposition presetName:AVAssetExportPresetAppleM4A];
     //  导入音视频的URL

@@ -9,6 +9,10 @@
 #import "ViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "MixTool.h"
+#import "HTSoundBoard+fadeVolume.h"
+
+#define recordSoundKey @"HappyRecord"
+#define backgroundMusicKey @"Happy"
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *composeButton;
@@ -55,7 +59,6 @@
 }
 
 - (IBAction)compose {
-    
     //  文档路径
     NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     //  文件路径
@@ -96,11 +99,11 @@
     }
     //  目录文件URL
     self.destURL = [NSURL fileURLWithPath:destPath];
-    NSString *path = [[NSBundle mainBundle]pathForResource:@"Happy" ofType:@"mp3"];
+    NSString *path = [[NSBundle mainBundle]pathForResource:backgroundMusicKey ofType:@"mp3"];
     NSURL *url = [NSURL fileURLWithPath:path];
 //    [sourceURLs addObject:url];
     
-    NSString *recordPath = [[NSBundle mainBundle]pathForResource:@"HappyRecord" ofType:@"mp3"];
+    NSString *recordPath = [[NSBundle mainBundle]pathForResource:recordSoundKey ofType:@"mp3"];
     NSURL *recordUrl = [NSURL fileURLWithPath:recordPath];
 //    [sourceURLs addObject:recordUrl];
     ////  导出音频
@@ -182,5 +185,27 @@
     //  记录录音器
     self.recoder = recorder;
     
+}
+
+- (IBAction)preview:(id)sender {
+    [HTSoundBoard addAudioAtPath:[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@.mp3",recordSoundKey] ofType:nil] forKey:recordSoundKey];
+    [HTSoundBoard addAudioAtPath:[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@.mp3",backgroundMusicKey] ofType:nil] forKey:backgroundMusicKey];
+    
+    AVAudioPlayer *player = [HTSoundBoard audioPlayerForKey:backgroundMusicKey];
+    if (player.playing) {
+        [HTSoundBoard pauseAudioForKey:backgroundMusicKey fadeOutInterval:2.0];
+    } else {
+        [HTSoundBoard playAudioForKey:backgroundMusicKey fadeInInterval:2.0];
+    }
+    
+    __block NSInteger i = 0;
+    [NSTimer scheduledTimerWithTimeInterval:2. repeats:YES block:^(NSTimer * _Nonnull timer) {
+        if (i==1) {
+            [HTSoundBoard playAudioForKey:recordSoundKey];
+            [HTSoundBoard fadeOutWithBackgroundKey:backgroundMusicKey fadeOutInterval:1.];
+        }
+        i++;
+        
+    }];
 }
 @end

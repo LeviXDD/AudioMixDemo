@@ -46,11 +46,20 @@
                                     <action selector="play" destination="BYZ-38-t0r" eventType="touchUpInside" id="2SR-xv-dU4"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="afp-3h-OgQ">
+                                <rect key="frame" x="171.5" y="409" width="31" height="30"/>
+                                <state key="normal" title="预览"/>
+                                <connections>
+                                    <action selector="preview:" destination="BYZ-38-t0r" eventType="touchUpInside" id="S5d-RL-3Iw"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="cl8-PI-gHd" firstAttribute="top" secondItem="C2U-U0-SQp" secondAttribute="bottom" constant="44" id="4ws-pY-3hL"/>
+                            <constraint firstItem="afp-3h-OgQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8ug-pK-Z0l"/>
                             <constraint firstItem="4Dq-Ia-LKI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FZt-hQ-feM"/>
+                            <constraint firstItem="afp-3h-OgQ" firstAttribute="top" secondItem="osv-T7-VuA" secondAttribute="bottom" constant="44" id="HYR-zL-Eke"/>
                             <constraint firstItem="osv-T7-VuA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="QLT-bS-WpT"/>
                             <constraint firstItem="4Dq-Ia-LKI" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="93" id="WYY-HK-FeA"/>
                             <constraint firstItem="C2U-U0-SQp" firstAttribute="top" secondItem="4Dq-Ia-LKI" secondAttribute="bottom" constant="44" id="Wy8-Fu-e5x"/>
