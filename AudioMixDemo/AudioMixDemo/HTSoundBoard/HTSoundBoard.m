@@ -9,7 +9,8 @@
 #import "HTSoundBoard.h"
 #import <AudioToolbox/AudioToolbox.h>
 
-
+@interface HTSoundBoard()<AVAudioPlayerDelegate>
+@end
 
 @implementation HTSoundBoard
 
@@ -89,6 +90,7 @@
 - (void)playAudioForKey:(id)key fadeInInterval:(NSTimeInterval)fadeInInterval
 {
     AVAudioPlayer *player = [_audio objectForKey:key];
+    player.delegate = self;
     // If fade in inteval interval is not 0, schedule fade in
     if (fadeInInterval > 0.0) {
         player.volume = 0.0;
@@ -221,5 +223,9 @@
     player.numberOfLoops = loops;
 }
 
+#pragma mark - AVAudioPlayerDelegate
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+    [[NSNotificationCenter defaultCenter] postNotificationName:MCSOUNDBOARD_AUDIO_STOPPED_NOTIFICATION object:player];
+}
 @end
 

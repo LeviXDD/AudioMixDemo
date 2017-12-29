@@ -37,6 +37,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.startRecordButton.hidden = self.stopRecordButton.hidden = YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(soundDidFinishedPlay:) name:MCSOUNDBOARD_AUDIO_STOPPED_NOTIFICATION object:nil];
 }
 
 
@@ -207,5 +208,14 @@
         i++;
         
     }];
+}
+
+#pragma mark - Notification Method
+-(void)soundDidFinishedPlay:(NSNotification*)noti{
+    AVAudioPlayer *player = [noti object];
+    AVAudioPlayer *recordSoundPlayer = [HTSoundBoard audioPlayerForKey:recordSoundKey];
+    if (player == recordSoundPlayer) {
+        [HTSoundBoard fadeInWithBackgroundKey:backgroundMusicKey fadeOutInterval:1.];
+    }
 }
 @end

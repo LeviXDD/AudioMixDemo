@@ -41,7 +41,7 @@
     volume = volume > 1.0 ? 1.0 : volume;
     player.volume = volume;
     
-    if (volume == 1.0) {
+    if (volume >= 1.0) {
         [timer invalidate];
     }
 }
@@ -77,10 +77,9 @@
     volume = volume < 0.2 ? 0.2 : volume;
     player.volume = volume;
     
-    //    if (volume == 0.0) {
-    //        [timer invalidate];
-    //        [player stop];
-    //    }
+        if (volume <= 0.21) {
+            [timer invalidate];
+        }
 }
 
 @end
