@@ -471,6 +471,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7L345678P6;
 				INFOPLIST_FILE = AudioMixDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.single.AudioMixDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -485,6 +486,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7L345678P6;
 				INFOPLIST_FILE = AudioMixDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.single.AudioMixDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -204,6 +204,7 @@
         if (i==1) {
             [HTSoundBoard playAudioForKey:recordSoundKey];
             [HTSoundBoard fadeOutWithBackgroundKey:backgroundMusicKey fadeOutInterval:1.];
+            [timer invalidate];
         }
         i++;
         
