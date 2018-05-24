@@ -9,10 +9,15 @@
 #import "MixTool.h"
 #import <AVFoundation/AVFoundation.h>
 @implementation MixTool
-/// 合并音频文件
-/// @param sourceURLs 需要合并的多个音频文件
-/// @param toURL      合并后音频文件的存放地址
-/// 注意:导出的文件是:m4a格式的.
+/**
+ 合成音频文件（包含渐入渐出人声效果）
+ 
+ @param toURL 合成文件后的导出路径
+ @param backUrl 背景音乐文件路径
+ @param audioUrl 要突出的声音文件
+ @param startTime 渐入人声时间节点
+ @param completed 合并文件完成
+ */
 + (void)sourceComposeToURL:(NSURL *) toURL backUrl:(NSURL*)backUrl audioUrl:(NSURL*)audioUrl startTime:(float)startTime completed:(void (^)(NSError *error)) completed{
     //  合并所有的录音文件
     AVMutableComposition* mixComposition = [AVMutableComposition composition];
@@ -49,17 +54,14 @@
     AVMutableAudioMixInputParameters *minColumeMix = [AVMutableAudioMixInputParameters audioMixInputParametersWithTrack:compositionAudioTrack];
     [minColumeMix setVolumeRampFromStartVolume:1. toEndVolume:0.1 timeRange:CMTimeRangeMake(CMTimeMake(startTime-1, 1), CMTimeMake(2, 1))];
     [audioMixParams addObject:minColumeMix];
+    
     //提高背景音乐时间节点
-//    AVMutableAudioMixInputParameters *maxVolumeMix = [AVMutableAudioMixInputParameters audioMixInputParametersWithTrack:compositionAudioTrack];
     CMTime endMinVolumeTime = CMTimeMake(startTime+audioDurationSeconds, 1);
-//    [maxVolumeMix setVolume:1.f atTime:endMinVolumeTime];
     [minColumeMix setVolumeRampFromStartVolume:0.1 toEndVolume:1. timeRange:CMTimeRangeMake(endMinVolumeTime, CMTimeMake(2, 1))];
-//    [audioMixParams addObject:maxVolumeMix];
     
     AVMutableAudioMix *backAudioMix = [AVMutableAudioMix audioMix];
     backAudioMix.inputParameters = [NSArray arrayWithArray:audioMixParams];
     
-    AVAudioEngine *engine;
     
     
     // 创建一个导入M4A格式的音频的导出对象

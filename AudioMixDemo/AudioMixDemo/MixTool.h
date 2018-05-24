@@ -9,9 +9,14 @@
 #import <Foundation/Foundation.h>
 
 @interface MixTool : NSObject
-/// 合并音频文件
-/// @param sourceURLs 需要合并的多个音频文件
-/// @param toURL      合并后音频文件的存放地址
-/// 注意:导出的文件是:m4a格式的.
+/**
+ 合成音频文件（包含渐入渐出人声效果）
+
+ @param toURL 合成文件后的导出路径
+ @param backUrl 背景音乐文件路径
+ @param audioUrl 要突出的声音文件
+ @param startTime 渐入人声时间节点
+ @param completed 合并文件完成
+ */
 + (void)sourceComposeToURL:(NSURL *) toURL backUrl:(NSURL*)backUrl audioUrl:(NSURL*)audioUrl startTime:(float)startTime completed:(void (^)(NSError *error)) completed;
 @end

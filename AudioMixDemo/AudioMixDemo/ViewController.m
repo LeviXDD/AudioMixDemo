@@ -27,64 +27,37 @@
 /// 目标路径
 @property (nonatomic, copy) NSURL *destURL;
 
-@property (weak, nonatomic) IBOutlet UIButton *startRecordButton;
-@property (weak, nonatomic) IBOutlet UIButton *stopRecordButton;
-
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.startRecordButton.hidden = self.stopRecordButton.hidden = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(soundDidFinishedPlay:) name:MCSOUNDBOARD_AUDIO_STOPPED_NOTIFICATION object:nil];
 }
 
 
 
-- (IBAction)start {
-    //  准备录音
-    [self prepareToRecord];
-    //  录音记录
-    BOOL isSuccess = [self.recoder record];
-    if (isSuccess) {
-        NSLog(@"开始录音成功");
-    }else{
-        NSLog(@"开始录音失败");
-    }
-}
-
-- (IBAction)stop {
-    [self.recoder stop];
-    NSLog(@"停止录音,保存文件的路径为:%@",self.recoder.url.absoluteString);
-}
+//- (IBAction)start {
+//    //  准备录音
+//    [self prepareToRecord];
+//    //  录音记录
+//    BOOL isSuccess = [self.recoder record];
+//    if (isSuccess) {
+//        NSLog(@"开始录音成功");
+//    }else{
+//        NSLog(@"开始录音失败");
+//    }
+//}
+//
+//- (IBAction)stop {
+//    [self.recoder stop];
+//    NSLog(@"停止录音,保存文件的路径为:%@",self.recoder.url.absoluteString);
+//}
 
 - (IBAction)compose {
-    //  文档路径
+    //  存储文件路径
     NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    //  文件路径
-//    NSArray *fileNames = [[NSFileManager defaultManager] subpathsAtPath:docPath];
-    //  获取文档目录保存所有 .AAC 格式的音频文件URL
-//    NSMutableArray *sourceURLs = [NSMutableArray array];
-    
-    //  遍历
-//    for (NSString *fileName in fileNames) {
-//        NSLog(@"源文件:%@",fileName);
-//
-//        if (![fileName.pathExtension isEqualToString:@"AAC"]) {
-//            continue;
-//        }
-//
-//        //      文件路径
-//        NSString *filePath = [docPath stringByAppendingPathComponent:fileName];
-//        //      文件的URL
-//        NSURL *fileURL = [NSURL fileURLWithPath:filePath];
-//        //      源文件数组
-//        [sourceURLs addObject:fileURL];
-//    }
-//
-    //  目标文件路径
-    
     
     
     NSString *destPath = [docPath stringByAppendingPathComponent:@"dest.m4a"];
@@ -100,15 +73,14 @@
     }
     //  目录文件URL
     self.destURL = [NSURL fileURLWithPath:destPath];
-    NSString *path = [[NSBundle mainBundle]pathForResource:backgroundMusicKey ofType:@"mp3"];
-    NSURL *url = [NSURL fileURLWithPath:path];
-//    [sourceURLs addObject:url];
+    NSString *backgroundMusicPath = [[NSBundle mainBundle]pathForResource:backgroundMusicKey ofType:@"mp3"];
+    NSURL *backgroundMusicUrl = [NSURL fileURLWithPath:backgroundMusicPath];
     
-    NSString *recordPath = [[NSBundle mainBundle]pathForResource:recordSoundKey ofType:@"mp3"];
-    NSURL *recordUrl = [NSURL fileURLWithPath:recordPath];
-//    [sourceURLs addObject:recordUrl];
-    ////  导出音频
-    [MixTool sourceComposeToURL:self.destURL backUrl:url audioUrl:recordUrl startTime:2. completed:^(NSError *error) {
+    NSString *peopleSoundPath = [[NSBundle mainBundle]pathForResource:recordSoundKey ofType:@"mp3"];
+    NSURL *peopleSoundUrl = [NSURL fileURLWithPath:peopleSoundPath];
+
+    ////  合并音频文件并导出音频
+    [MixTool sourceComposeToURL:self.destURL backUrl:backgroundMusicUrl audioUrl:peopleSoundUrl startTime:2. completed:^(NSError *error) {
         if (error == nil) {
             [self.composeButton setTitle:@"合并成功" forState:UIControlStateNormal];
         }
@@ -200,15 +172,19 @@
     }
     
     __block NSInteger i = 0;
-    [NSTimer scheduledTimerWithTimeInterval:2. repeats:YES block:^(NSTimer * _Nonnull timer) {
-        if (i==1) {
-            [HTSoundBoard playAudioForKey:recordSoundKey];
-            [HTSoundBoard fadeOutWithBackgroundKey:backgroundMusicKey fadeOutInterval:1.];
-            [timer invalidate];
-        }
-        i++;
-        
-    }];
+    if (@available(iOS 10.0, *)) {
+        [NSTimer scheduledTimerWithTimeInterval:2. repeats:YES block:^(NSTimer * _Nonnull timer) {
+            if (i==1) {
+                [HTSoundBoard playAudioForKey:recordSoundKey];
+                [HTSoundBoard fadeOutWithBackgroundKey:backgroundMusicKey fadeOutInterval:1.];
+                [timer invalidate];
+            }
+            i++;
+            
+        }];
+    } else {
+        // Fallback on earlier versions
+    }
 }
 
 #pragma mark - Notification Method
