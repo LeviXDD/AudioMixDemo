@@ -18,47 +18,22 @@
 @property (weak, nonatomic) IBOutlet UIButton *composeButton;
 
 @property (nonatomic, strong) AVAudioRecorder *recoder;
-
-
 @property (nonatomic, strong) AVAudioPlayer *player;
-
-@property (nonatomic, strong)   AVAssetExportSession* assetExport;
+@property (nonatomic, strong) AVAssetExportSession* assetExport;
 
 /// 目标路径
 @property (nonatomic, copy) NSURL *destURL;
-
 @end
 
 @implementation ViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(soundDidFinishedPlay:) name:MCSOUNDBOARD_AUDIO_STOPPED_NOTIFICATION object:nil];
 }
 
-
-
-//- (IBAction)start {
-//    //  准备录音
-//    [self prepareToRecord];
-//    //  录音记录
-//    BOOL isSuccess = [self.recoder record];
-//    if (isSuccess) {
-//        NSLog(@"开始录音成功");
-//    }else{
-//        NSLog(@"开始录音失败");
-//    }
-//}
-//
-//- (IBAction)stop {
-//    [self.recoder stop];
-//    NSLog(@"停止录音,保存文件的路径为:%@",self.recoder.url.absoluteString);
-//}
-
 - (IBAction)compose {
     //  存储文件路径
     NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    
     
     NSString *destPath = [docPath stringByAppendingPathComponent:@"dest.m4a"];
     NSError *error = nil;
@@ -85,7 +60,6 @@
             [self.composeButton setTitle:@"合并成功" forState:UIControlStateNormal];
         }
     }];
-    
 }
 
 - (IBAction)play {

@@ -18,5 +18,9 @@
  @param startTime 渐入人声时间节点
  @param completed 合并文件完成
  */
-+ (void)sourceComposeToURL:(NSURL *) toURL backUrl:(NSURL*)backUrl audioUrl:(NSURL*)audioUrl startTime:(float)startTime completed:(void (^)(NSError *error)) completed;
++ (void)sourceComposeToURL:(NSURL *)toURL
+                   backUrl:(NSURL*)backUrl
+                  audioUrl:(NSURL*)audioUrl
+                 startTime:(float)startTime
+                 completed:(void (^)(NSError *error)) completed;
 @end
