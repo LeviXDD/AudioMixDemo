@@ -66,12 +66,21 @@
     AVMutableAudioMix *backAudioMix = [AVMutableAudioMix audioMix];
     backAudioMix.inputParameters = [NSArray arrayWithArray:audioMixParams];
     
-    
-    
+    [MixTool exportM4AFile:mixComposition exportUrl:toURL backAudioMix:backAudioMix completionBlock:^(NSError *error) {
+        if (completed) {
+            completed(error);
+        }
+    }];
+}
+
++(void)exportM4AFile:(AVMutableComposition*)mixComposition
+                exportUrl:(NSURL*)exportUrl
+        backAudioMix:(AVMutableAudioMix*)backAudioMix
+     completionBlock:(void(^)(NSError *error))completionBlock{
     // 创建一个导入M4A格式的音频的导出对象
     AVAssetExportSession* assetExport = [[AVAssetExportSession alloc] initWithAsset:mixComposition presetName:AVAssetExportPresetAppleM4A];
     //  导入音视频的URL
-    assetExport.outputURL = toURL;
+    assetExport.outputURL = exportUrl;
     //  导出音视频的文件格式
     assetExport.outputFileType = AVFileTypeAppleM4A;//@"com.apple.m4a-audio";
     //导出参数
@@ -101,7 +110,5 @@
             }
         });
     }];
-    
 }
-
 @end
