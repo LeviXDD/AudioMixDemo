@@ -1,4 +1,13 @@
 # iOS 音频合并（淡入淡出）AudioMixDemo
+
+
+
+```
+<a href="https://996.icu"><img src="https://img.shields.io/badge/link-996.icu-red.svg" alt="996.icu" /></a>
+```
+
+
+
 ### 主要功能
 
 - 合并两个音频文件，并导出到指定目录
@@ -21,4 +30,3 @@
 ------
 
 https://www.jianshu.com/p/dada0bfbfa45
-
